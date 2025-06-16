@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'com.android.tools.build:gradle:8.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -20,6 +20,9 @@ rootProject.allprojects {
         mavenCentral()
     }
 }
+
+System.setProperty("javax.net.ssl.trustStore", System.getProperty("java.home") + "/lib/security/cacerts")
+System.setProperty("https.protocols", "TLSv1.2,TLSv1.3")
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -40,15 +43,15 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 
     compileOptions {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
-        // Sets Java compatibility to Java 11
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        // Sets Java compatibility to Java 17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     if (project.android.hasProperty('namespace')) {
         namespace 'net.touchcapture.qr.flutterqr'
@@ -56,7 +59,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.zxing:core:3.5.2'
